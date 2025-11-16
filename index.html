@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SquishyPic - Image Compressor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-50 min-h-screen">
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">SquishyPic</h1>
+            <p class="text-lg text-gray-600">Upload, compress, and download images instantly</p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+            <!-- Upload Section -->
+            <div id="upload-section" class="p-8 border-b border-gray-100">
+                <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer transition-colors duration-200 hover:border-blue-500 hover:bg-blue-50">
+                    <div class="flex flex-col items-center justify-center">
+                        <i data-feather="upload" class="w-12 h-12 text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-medium text-gray-700 mb-2">Drag & Drop your image</h3>
+                        <p class="text-gray-500 mb-4">or click to browse files</p>
+                        <input type="file" id="file-input" accept="image/*" class="hidden">
+                        <button id="browse-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">Select Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div id="preview-section" class="hidden p-8 border-b border-gray-100">
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-medium text-gray-700 mb-4">Original Image</h3>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden">
+                            <img id="original-img" class="w-full h-auto max-h-80 object-contain mx-auto">
+                        </div>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <span id="original-size" class="font-medium">0 KB</span>
+                            <span> • </span>
+                            <span id="original-dimensions">0×0 px</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-medium text-gray-700 mb-4">Compressed Image</h3>
+                        <div class="bg-gray-100 rounded-lg overflow-hidden">
+                            <img id="compressed-img" class="w-full h-auto max-h-80 object-contain mx-auto">
+                        </div>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <span id="compressed-size" class="font-medium">0 KB</span>
+                            <span> • </span>
+                            <span id="compressed-dimensions">0×0 px</span>
+                            <span id="savings" class="ml-2 text-green-600 font-medium">(0% smaller)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div id="controls-section" class="hidden p-8">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <label for="quality-slider" class="text-gray-700 font-medium">Compression Quality: <span id="quality-value">80</span>%</label>
+                    </div>
+                    <input type="range" id="quality-slider" min="1" max="100" value="80" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button id="compress-btn" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i data-feather="refresh-cw" class="w-5 h-5"></i>
+                        <span>Compress</span>
+                    </button>
+                    <button id="download-btn" class="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center gap-2" disabled>
+                        <i data-feather="download" class="w-5 h-5"></i>
+                        <span>Download</span>
+                    </button>
+                    <button id="reset-btn" class="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i data-feather="trash-2" class="w-5 h-5"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-section" class="hidden p-12 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                <p class="text-gray-600">Compressing your image...</p>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>All processing happens in your browser. Your images never leave your device.</p>
+        </footer>
+    </main>
+
+    <script src="compressor.js"></script>
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+<script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
+</body>
+</html>
